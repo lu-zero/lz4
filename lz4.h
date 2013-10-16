@@ -33,6 +33,10 @@
 */
 #pragma once
 
+#define LZ4_VERSION_MAJOR 0
+#define LZ4_VERSION_MINOR 0
+#define LZ4_VERSION_PATCH 0
+
 #if defined (__cplusplus)
 extern "C" {
 #endif
