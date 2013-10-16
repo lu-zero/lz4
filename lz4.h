@@ -31,7 +31,8 @@
    - LZ4 homepage : http://fastcompression.blogspot.com/p/lz4.html
    - LZ4 source repository : http://code.google.com/p/lz4/
 */
-#pragma once
+#ifndef LZ4_H
+#define LZ4_H
 
 #define LZ4_VERSION_MAJOR 0
 #define LZ4_VERSION_MINOR 0
@@ -207,3 +208,5 @@ They are provided here for compatibility with existing user programs.
 #if defined (__cplusplus)
 }
 #endif
+
+#endif /* BENCH_H */

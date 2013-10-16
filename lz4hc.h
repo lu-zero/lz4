@@ -31,8 +31,8 @@
    - LZ4 homepage : http://fastcompression.blogspot.com/p/lz4.html
    - LZ4 source repository : http://code.google.com/p/lz4/
 */
-#pragma once
-
+#ifndef LZ4HC_H
+#define LZ4HC_H
 
 #if defined (__cplusplus)
 extern "C" {
@@ -109,3 +109,5 @@ When compression is completed, a call to LZ4_freeHC() will release the memory us
 #if defined (__cplusplus)
 }
 #endif
+
+#endif /* LZ4HC_H */

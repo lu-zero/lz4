@@ -20,7 +20,9 @@
     - LZ4 homepage : http://fastcompression.blogspot.com/p/lz4.html
     - LZ4 source repository : http://code.google.com/p/lz4/
 */
-#pragma once
+
+#ifndef BENCH_H
+#define BENCH_H
 
 #if defined (__cplusplus)
 extern "C" {
@@ -39,3 +41,5 @@ void BMK_SetPause();
 #if defined (__cplusplus)
 }
 #endif
+
+#endif /* BENCH_H */
