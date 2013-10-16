@@ -89,7 +89,7 @@
 #elif GCC_VERSION >= 403
 #  define swap32 __builtin_bswap32
 #else
-  static inline unsigned int swap32(unsigned int x) 
+  static inline unsigned int swap32(unsigned int x)
   {
     return ((x << 24) & 0xff000000 ) |
            ((x <<  8) & 0x00ff0000 ) |
@@ -316,31 +316,31 @@ static int          LZ4S_isSkippableMagicNumber(unsigned int magic) { return (ma
 int get_fileHandle(char* input_filename, char* output_filename, FILE** pfinput, FILE** pfoutput)
 {
 
-    if (!strcmp (input_filename, stdinmark)) 
+    if (!strcmp (input_filename, stdinmark))
     {
         DISPLAYLEVEL(4,"Using stdin for input\n");
         *pfinput = stdin;
         SET_BINARY_MODE(stdin);
-    } 
-    else 
+    }
+    else
     {
         *pfinput = fopen(input_filename, "rb");
     }
 
-    if (!strcmp (output_filename, stdoutmark)) 
+    if (!strcmp (output_filename, stdoutmark))
     {
         DISPLAYLEVEL(4,"Using stdout for output\n");
         *pfoutput = stdout;
         SET_BINARY_MODE(stdout);
-    } 
-    else 
+    }
+    else
     {
         // Check if destination file already exists
         *pfoutput=0;
         if (output_filename != nulmark) *pfoutput = fopen( output_filename, "rb" );
-        if (*pfoutput!=0) 
-        { 
-            fclose(*pfoutput); 
+        if (*pfoutput!=0)
+        {
+            fclose(*pfoutput);
             if (!overwrite)
             {
                 char ch;
@@ -355,7 +355,7 @@ int get_fileHandle(char* input_filename, char* output_filename, FILE** pfinput, 
     }
 
     if ( *pfinput==0 ) EXM_THROW(12, "Pb opening %s", input_filename);
-    if ( *pfoutput==0) EXM_THROW(13, "Pb opening %s", output_filename); 
+    if ( *pfoutput==0) EXM_THROW(13, "Pb opening %s", output_filename);
 
     return 0;
 }
@@ -745,7 +745,7 @@ unsigned long long decodeLegacyStream(FILE* finput, FILE* foutput)
         sizeCheck = fread(&blockSize, 1, 4, finput);
         if (sizeCheck==0) break;                   // Nothing to read : file read is completed
         blockSize = LITTLE_ENDIAN_32(blockSize);   // Convert to Little Endian
-        if (blockSize > LZ4_COMPRESSBOUND(LEGACY_BLOCKSIZE)) 
+        if (blockSize > LZ4_COMPRESSBOUND(LEGACY_BLOCKSIZE))
         {   // Cannot read next block : maybe new stream ?
             fseek(finput, -4, SEEK_CUR);
             break;
@@ -807,11 +807,11 @@ unsigned long long decodeLZ4S(FILE* finput, FILE* foutput)
         streamChecksumFlag= (descriptor[0] >> 2) & _1BIT;
 
         if (version != 1)       EXM_THROW(62, "Wrong version number");
-        if (streamSize == 1)    EXM_THROW(64, "Does not support stream size");  
+        if (streamSize == 1)    EXM_THROW(64, "Does not support stream size");
         if (reserved1 != 0)     EXM_THROW(65, "Wrong value for reserved bits");
-        if (dictionary == 1)    EXM_THROW(66, "Does not support dictionary"); 
+        if (dictionary == 1)    EXM_THROW(66, "Does not support dictionary");
         if (reserved2 != 0)     EXM_THROW(67, "Wrong value for reserved bits");
-        if (blockSizeId < 4)    EXM_THROW(68, "Unsupported block size"); 
+        if (blockSizeId < 4)    EXM_THROW(68, "Unsupported block size");
         if (reserved3 != 0)     EXM_THROW(67, "Wrong value for reserved bits");
         maxBlockSize = LZ4S_GetBlockSize_FromBlockId(blockSizeId);
         // Checkbits verification
@@ -832,7 +832,7 @@ unsigned long long decodeLZ4S(FILE* finput, FILE* foutput)
         unsigned int outbuffSize = prefix64k+maxBlockSize;
         in_buff  = (char*)malloc(maxBlockSize);
         if (outbuffSize < MIN_STREAM_BUFSIZE) outbuffSize = MIN_STREAM_BUFSIZE;
-        out_buff = (char*)malloc(outbuffSize); 
+        out_buff = (char*)malloc(outbuffSize);
         out_end = out_buff + outbuffSize;
         out_start = out_buff + prefix64k;
         if (!in_buff || !out_buff) EXM_THROW(70, "Allocation error : not enough memory");
@@ -906,10 +906,10 @@ unsigned long long decodeLZ4S(FILE* finput, FILE* foutput)
         if (!blockIndependenceFlag)
         {
             out_start += decodedBytes;
-            if ((size_t)(out_end - out_start) < (size_t)maxBlockSize) 
+            if ((size_t)(out_end - out_start) < (size_t)maxBlockSize)
             {
-                memcpy(out_buff, out_start - prefix64k, prefix64k); 
-                out_start = out_buff + prefix64k; 
+                memcpy(out_buff, out_start - prefix64k, prefix64k);
+                out_start = out_buff + prefix64k;
             }
         }
     }
@@ -983,7 +983,7 @@ int decodeFile(char* input_filename, char* output_filename)
     get_fileHandle(input_filename, output_filename, &finput, &foutput);
 
     // Loop over multiple streams
-    do 
+    do
     {
         decodedSize = selectDecoder(finput, foutput);
         filesize += decodedSize;
@@ -1073,7 +1073,7 @@ int main(int argc, char** argv)
                 case 'z': forceCompress = 1; break;
 
                     // Compression level
-                case '0': 
+                case '0':
                 case '1':
                 case '2':
                 case '3':
@@ -1119,10 +1119,10 @@ int main(int argc, char** argv)
                         case '5':
                         case '6':
                         case '7':
-                        { 
-                            int B = argument[1] - '0'; 
-                            int S = 1 << (8 + 2*B); 
-                            BMK_SetBlocksize(S); 
+                        {
+                            int B = argument[1] - '0';
+                            int S = 1 << (8 + 2*B);
+                            BMK_SetBlocksize(S);
                             blockSizeId = B;
                             argument++;
                             break;
@@ -1142,11 +1142,11 @@ int main(int argc, char** argv)
                 case 'b': bench=1; break;
 
                     // Modify Nb Iterations (benchmark only)
-                case 'i': 
+                case 'i':
                     if ((argument[1] >='1') && (argument[1] <='9'))
                     {
-                        int iters = argument[1] - '0'; 
-                        BMK_SetNbIterations(iters); 
+                        int iters = argument[1] - '0';
+                        BMK_SetNbIterations(iters);
                         argument++;
                     }
                     break;
@@ -1188,7 +1188,7 @@ int main(int argc, char** argv)
     if (bench) return BMK_benchFile(argv+filenamesStart, argc-filenamesStart, cLevel);
 
     // No output filename ==> try to select one automatically (when possible)
-    while (!output_filename) 
+    while (!output_filename)
     {
         if (!IS_CONSOLE(stdout)) { output_filename=stdoutmark; break; }   // Default to stdout whenever possible (i.e. not a console)
         if ((!decode) && !(forceCompress))   // auto-determine compression or decompression, based on file extension

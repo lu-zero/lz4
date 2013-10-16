@@ -44,7 +44,7 @@ int LZ4_compressHC (const char* source, char* dest, int inputSize);
 LZ4_compressHC :
     return : the number of bytes in compressed buffer dest
              or 0 if compression fails.
-    note : destination buffer must be already allocated. 
+    note : destination buffer must be already allocated.
         To avoid any problem, size it to handle worst cases situations (input data not compressible)
         Worst case size evaluation is provided by function LZ4_compressBound() (see "lz4.h")
 */
@@ -76,7 +76,7 @@ int   LZ4_compressHC_limitedOutput_continue (void* LZ4HC_Data, const char* sourc
 char* LZ4_slideInputBufferHC (void* LZ4HC_Data);
 int   LZ4_freeHC (void* LZ4HC_Data);
 
-/* 
+/*
 These functions allow the compression of dependent blocks, where each block benefits from prior 64 KB within preceding blocks.
 In order to achieve this, it is necessary to start creating the LZ4HC Data Structure, thanks to the function :
 
@@ -90,11 +90,11 @@ The input buffer must be already allocated, and size at least 192KB.
 
 All blocks are expected to lay next to each other within the input buffer, starting from 'inputBuffer'.
 To compress each block, use either LZ4_compressHC_continue() or LZ4_compressHC_limitedOutput_continue().
-Their behavior are identical to LZ4_compressHC() or LZ4_compressHC_limitedOutput(), 
+Their behavior are identical to LZ4_compressHC() or LZ4_compressHC_limitedOutput(),
 but require the LZ4HC Data Structure as their first argument, and check that each block starts right after the previous one.
 If next block does not begin immediately after the previous one, the compression will fail (return 0).
 
-When it's no longer possible to lay the next block after the previous one (not enough space left into input buffer), a call to : 
+When it's no longer possible to lay the next block after the previous one (not enough space left into input buffer), a call to :
 char* LZ4_slideInputBufferHC(void* LZ4HC_Data);
 must be performed. It will typically copy the latest 64KB of input at the beginning of input buffer.
 Note that, for this function to work properly, minimum size of an input buffer must be 192KB.
